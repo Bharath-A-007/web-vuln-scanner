@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Vulnerability Scanner - Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            text-align: left;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        
+        .features li {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+        
+        .demo-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .tech-stack {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Website Vulnerability Scanner</h1>
+        <p class="tagline">Making Web Security Accessible to Everyone</p>
+        
+        <div class="demo-box">
+            <h3>🚀 Project Demo - Static Preview</h3>
+            <p><strong>Note:</strong> This is a static demo page. The full application with live scanning requires the Flask backend to be running.</p>
+            
+            <ul class="features">
+                <li>✅ <strong>SQL Injection Detection</strong> - Find database vulnerabilities</li>
+                <li>✅ <strong>XSS Vulnerability Scanning</strong> - Detect cross-site scripting attacks</li>
+                <li>✅ <strong>Security Headers Analysis</strong> - Check missing security headers</li>
+                <li>✅ <strong>SSL/TLS Configuration Check</strong> - Verify encryption settings</li>
+                <li>✅ <strong>PDF Report Generation</strong> - Download detailed security reports</li>
+                <li>✅ <strong>Beginner-Friendly Interface</strong> - No security expertise required</li>
+            </ul>
+        </div>
+
+        <div class="tech-stack">
+            <h3>🛠️ Technology Stack</h3>
+            <p><strong>Backend:</strong> Python, Flask</p>
+            <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
+            <p><strong>Libraries:</strong> Requests, BeautifulSoup, ReportLab</p>
+        </div>
+        
+        <div>
+            <a href="https://github.com/Bharath-A-007/web-vuln-scanner" class="btn">
+                📁 View Full Project on GitHub
+            </a>
+            <br>
+            <a href="https://github.com/Bharath-A-007/web-vuln-scanner#readme" class="btn btn-secondary">
+                📚 Installation & Documentation
+            </a>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 8px;">
+            <h3>🎯 How to Run the Full Application</h3>
+            <p><strong>Quick Start (Local):</strong></p>
+            <code style="background: #2d3748; color: white; padding: 10px 15px; border-radius: 5px; display: inline-block;">
+                git clone https://github.com/Bharath-A-007/web-vuln-scanner.git<br>
+                cd web-vuln-scanner<br>
+                pip install -r requirements.txt<br>
+                python app.py
+            </code>
+            <p style="margin-top: 15px; font-size: 14px;">
+                Then open: <strong>http://localhost:5000</strong>
+            </p>
+        </div>
+
+        <div style="margin-top: 30px; color: #666; font-size: 14px;">
+            <p>👥 <strong>Team Project</strong> - Department of CSE (Cyber Security)</p>
+            <p>🏫 <strong>APS College of Engineering</strong></p>
+        </div>
+    </div>
+</body>
+</html>
