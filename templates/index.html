@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Vulnerability Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .scan-form {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .url-input {
+            padding: 12px;
+            width: 70%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .scan-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .scan-button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .scan-button.comprehensive {
+            background-color: #e67e22;
+        }
+        
+        .scan-button:hover {
+            opacity: 0.9;
+        }
+        
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+        
+        .finding {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-left: 4px solid;
+            border-radius: 4px;
+        }
+        
+        .critical { border-left-color: #e74c3c; }
+        .high { border-left-color: #e67e22; }
+        .medium { border-left-color: #f39c12; }
+        .info { border-left-color: #3498db; }
+        .secure { border-left-color: #2ecc71; }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        
+        .loading {
+            text-align: center;
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .vuln-category {
+            margin-top: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Website Vulnerability Scanner</h1>
+        <p class="description">Comprehensive website security vulnerability scanner</p>
+        
+        <div class="scan-form">
+            <input type="url" id="url-input" class="url-input" placeholder="https://example.com" value="{{ target_url }}">
+            
+            <div class="scan-options">
+                <button onclick="startScan('quick')" class="scan-button">Quick Scan</button>
+                <button onclick="startScan('comprehensive')" class="scan-button comprehensive">Comprehensive Scan</button>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Scanning website, please wait...</p>
+        </div>
+        
+        {% if result_list %}
+            <div class="result-box">
+                <h3>Scan Results for {{ target_url }}</h3>
+                
+                {% for category, findings in result_list.items() %}
+                    {% if findings %}
+                    <div class="vuln-category">
+                        <h4>{{ category }}</h4>
+                        {% for finding in findings %}
+                            {% if '🚨 CRITICAL' in finding %}
+                                <div class="finding critical">{{ finding }}</div>
+                            {% elif '❌ HIGH' in finding %}
+                                <div class="finding high">{{ finding }}</div>
+                            {% elif '⚠️ MEDIUM' in finding %}
+                                <div class="finding medium">{{ finding }}</div>
+                            {% elif 'ℹ️ INFO' in finding %}
+                                <div class="finding info">{{ finding }}</div>
+                            {% elif '✅' in finding %}
+                                <div class="finding secure">{{ finding }}</div>
+                            {% else %}
+                                <div class="finding">{{ finding }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                
+                <div style="text-align: center;">
+                    <a href="/download-report?url={{ target_url }}" class="download-btn">
+                        Download PDF Report
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-results">
+                <p>Enter a URL above to start scanning. Results will appear here.</p>
+                <p>Try: <code>testphp.vulnweb.com</code> or <code>httpbin.org</code></p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function startScan(scanType) {
+            const url = document.getElementById('url-input').value;
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+            
+            document.getElementById('loading').style.display = 'block';
+            
+            // Create form and submit
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/';
+            
+            const urlField = document.createElement('input');
+            urlField.type = 'hidden';
+            urlField.name = 'url';
+            urlField.value = url;
+            form.appendChild(urlField);
+            
+            const scanTypeField = document.createElement('input');
+            scanTypeField.type = 'hidden';
+            scanTypeField.name = 'scan_type';
+            scanTypeField.value = scanType;
+            form.appendChild(scanTypeField);
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>
